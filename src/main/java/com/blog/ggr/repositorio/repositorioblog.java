@@ -11,8 +11,4 @@ public interface repositorioblog extends JpaRepository<modelblog, Long>{
 	List<modelblog> findAllByTituloContainingIgnoreCase(String titulo);
 
 	
-			
-	
-	
-
 }

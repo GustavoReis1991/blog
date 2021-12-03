@@ -2,6 +2,8 @@ package com.blog.ggr.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ import com.blog.ggr.repositorio.repositorioblog;
 
 @RestController
 @RequestMapping("/blog.ggr")
-@CrossOrigin("*")
+@CrossOrigin(origins= "*", allowedHeaders="*")
 
 public class controllerblog {
 	
@@ -46,14 +48,14 @@ public class controllerblog {
 	}
 	
 	@PostMapping
-	public ResponseEntity<modelblog> post (@RequestBody modelblog postagem)
+	public ResponseEntity<modelblog> post (@Valid @RequestBody modelblog postagem)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(rg.save(postagem));
 		
 	}
 	
 	@PutMapping
-	public ResponseEntity<modelblog> put (@RequestBody modelblog postagem)
+	public ResponseEntity<modelblog> put (@Valid @RequestBody modelblog postagem)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(rg.save(postagem));
 		
