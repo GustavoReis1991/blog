@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.ggr.model.modeltema;
+import com.blog.ggr.model.categoria;
 import com.blog.ggr.repositorio.repositoriotema;
 
 @RestController
@@ -29,31 +29,31 @@ public class controllertema {
 	private repositoriotema rt;
 	
 	@GetMapping
-	public ResponseEntity<List<modeltema>> getAll() {
+	public ResponseEntity<List<categoria>> getAll() {
 		return ResponseEntity.ok(rt.findAll());
 		
 	}
 	
 	@GetMapping("/{id_tema}")
-	public ResponseEntity<modeltema> getById(@PathVariable long id_tema){
+	public ResponseEntity<categoria> getById(@PathVariable long id_tema){
 		return rt.findById(id_tema).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<modeltema>> getByname (@PathVariable String nome)
+	public ResponseEntity<List<categoria>> getByname (@PathVariable String nome)
 	{
 		return ResponseEntity.ok(rt.findAllByTemaContainingIgnoreCase(nome));
 	}
 	
 	@PostMapping
-	public ResponseEntity<modeltema> post (@RequestBody modeltema tema)
+	public ResponseEntity<categoria> post (@RequestBody categoria tema)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(rt.save(tema));
 	}
 	
 	@PutMapping
-	public ResponseEntity<modeltema> put (@RequestBody modeltema tema)
+	public ResponseEntity<categoria> put (@RequestBody categoria tema)
 	{
 		return ResponseEntity.ok(rt.save(tema));
 	}

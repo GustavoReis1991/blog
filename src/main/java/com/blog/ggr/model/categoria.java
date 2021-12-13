@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "Tema")
 
-public class modeltema {
+public class categoria {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -32,13 +32,13 @@ public class modeltema {
 	
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("tema")
-	private List<modelblog> postagem;
+	private List<produto> postagem;
 	
-	public List<modelblog> getPostagem() {
+	public List<produto> getPostagem() {
 		return postagem;
 	}
 
-	public void setPostagem(List<modelblog> postagem) {
+	public void setPostagem(List<produto> postagem) {
 		this.postagem = postagem;
 	}
 
