@@ -44,8 +44,15 @@ public class Usuario {
 
 	
 	public Usuario(long id, String nome, String usuario, String senha) {
-		// TODO Auto-generated constructor stub
+		
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		
 	}
+
+	public Usuario() { }
 
 	public long getId() {
 		return id;
