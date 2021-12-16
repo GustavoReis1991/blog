@@ -15,6 +15,7 @@ import com.blog.ggr.repositorio.Usuariorepositorio;
 
 
 
+
 @Service
 
 public class UsuarioService {
@@ -22,56 +23,75 @@ public class UsuarioService {
 	@Autowired
 	private Usuariorepositorio userrep;
 	
-	public List<Usuario> listarusuario(){
-		
-		return userrep.findAll();
-	}
-	
-	public Optional<Usuario> cadastrarUsuario (Usuario usuario){
-		
+	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
+
 		if (userrep.findByUsuario(usuario.getUsuario()).isPresent())
-		return Optional.empty();
+			return Optional.empty();
 		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
-		String senhaencoder = encoder.encode(usuario.getSenha());
-		
-		usuario.setSenha(senhaencoder);
-		
+		usuario.setSenha(criptografarSenha(usuario.getSenha()));
+
 		return Optional.of(userrep.save(usuario));
-	}
 	
+	}
+
+	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
+
+		
+		if (userrep.findByUsuario(usuario.getUsuario()).isPresent()) {
+			
+			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+			
+			return Optional.of(userrep.save(usuario));
+			
+		}
+			
+		return Optional.empty();
+
+	}	
+
 	public Optional<login> autenticarUsuario(Optional<login> usuarioLogin) {
 
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
 		Optional<Usuario> usuario = userrep.findByUsuario(usuarioLogin.get().getUsuario());
 
 		if (usuario.isPresent()) {
-			
-		
-			if (encoder.matches(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
-
-				String auth = usuarioLogin.get().getUsuario() + ":" + usuarioLogin.get().getSenha();
-							
-				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
-				
-				String authHeader = "Basic " + new String(encodedAuth);
+			if (compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
 
 				usuarioLogin.get().setId(usuario.get().getId());
 				usuarioLogin.get().setNome(usuario.get().getNome());
+				usuarioLogin.get().setToken(gerarBasicToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha()));
 				usuarioLogin.get().setSenha(usuario.get().getSenha());
-				usuarioLogin.get().setToken(authHeader);
 
 				return usuarioLogin;
 
 			}
-		}
-		
+		}	
 		
 		return Optional.empty();
+		
+	}
+
+	private String criptografarSenha(String senha) {
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		return encoder.encode(senha);
+
 	}
 	
-	
+	private boolean compararSenhas(String senhaDigitada, String senhaBanco) {
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		return encoder.matches(senhaDigitada, senhaBanco);
+
+	}
+
+	private String gerarBasicToken(String usuario, String senha) {
+
+		String token = usuario + ":" + senha;
+		byte[] tokenBase64 = Base64.encodeBase64(token.getBytes(Charset.forName("US-ASCII")));
+		return "Basic " + new String(tokenBase64);
+
+	}
 
 }

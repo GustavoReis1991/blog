@@ -27,7 +27,6 @@ public class Usuario {
 	private long id;
 	
 	@NotBlank
-	@Size (min =5, max=50)
 	private String nome;
 	
 	@NotBlank
@@ -35,29 +34,17 @@ public class Usuario {
 	private String usuario;
 	
 	@NotBlank
-	@Size (min =5, max=50)
+	@Size (min =5)
 	private String senha;
 	
-	private String foto;
-	
+		
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<produto> postagem;
 
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
-	public List<produto> getPostagem() {
-		return postagem;
-	}
-
-	public void setPostagem(List<produto> postagem) {
-		this.postagem = postagem;
+	
+	public Usuario(long id, String nome, String usuario, String senha) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -91,6 +78,15 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	public List<produto> getPostagem() {
+		return postagem;
+	}
+
+	public void setPostagem(List<produto> postagem) {
+		this.postagem = postagem;
+	}
+
 	
 
 }
