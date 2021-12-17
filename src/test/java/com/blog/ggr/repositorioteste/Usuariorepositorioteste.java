@@ -1,4 +1,4 @@
-package com.blog.ggr.repositorio;
+package com.blog.ggr.repositorioteste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
-import com.blog.ggr.repositorio.Usuariorepositorio;
 import com.blog.ggr.model.Usuario;
+import com.blog.ggr.repositorio.Usuariorepositorio;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

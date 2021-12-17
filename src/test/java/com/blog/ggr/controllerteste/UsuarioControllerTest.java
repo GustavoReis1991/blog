@@ -1,4 +1,4 @@
-package com.blog.ggr.controller;
+package com.blog.ggr.controllerteste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

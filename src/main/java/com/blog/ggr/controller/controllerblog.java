@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blog.ggr.model.produto;
+import com.blog.ggr.model.Postagem;
 import com.blog.ggr.repositorio.repositorioblog;
 
 @RestController
@@ -30,32 +30,32 @@ public class controllerblog {
 	private repositorioblog rg;
 	
 	@GetMapping
-	public ResponseEntity<List<produto>> getAll(){
+	public ResponseEntity<List<Postagem>> getAll(){
 		return ResponseEntity.ok(rg.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<produto> GetById(@PathVariable long id){
+	public ResponseEntity<Postagem> GetById(@PathVariable long id){
 		return rg.findById(id)
 				.map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/titulo/{titulo}")
-	public ResponseEntity<List<produto>> GetByTitulo(@PathVariable String titulo)
+	public ResponseEntity<List<Postagem>> GetByTitulo(@PathVariable String titulo)
 	{
 		return ResponseEntity.ok (rg.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
 	@PostMapping
-	public ResponseEntity<produto> post (@Valid @RequestBody produto postagem)
+	public ResponseEntity<Postagem> post (@Valid @RequestBody Postagem postagem)
 	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(rg.save(postagem));
 		
 	}
 	
 	@PutMapping
-	public ResponseEntity<produto> put (@Valid @RequestBody produto postagem)
+	public ResponseEntity<Postagem> put (@Valid @RequestBody Postagem postagem)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(rg.save(postagem));
 		

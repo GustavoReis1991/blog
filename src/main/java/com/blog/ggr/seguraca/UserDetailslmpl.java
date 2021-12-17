@@ -1,6 +1,7 @@
 package com.blog.ggr.seguraca;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,11 @@ public class UserDetailslmpl implements UserDetails {
 	
 	private String userName;
 	private String password;
+	private List<GrantedAuthority> authorities;
 	
-	public UserDetailslmpl(Usuario user) {
-		this.userName = user.getUsuario();
-		this.password = user.getSenha();
+	public UserDetailslmpl(Usuario usuario) {
+		this.userName = usuario.getUsuario();
+		this.password = usuario.getSenha();
 	}
 	
 	public UserDetailslmpl() {}
@@ -24,7 +26,7 @@ public class UserDetailslmpl implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		return authorities;
 	}
 
 	@Override

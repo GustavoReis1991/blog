@@ -22,16 +22,7 @@ public class login {
 	
 	private String usuario;
 	
-	private String foto;
 	
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
 	private String senha;
 	
 	private String token;

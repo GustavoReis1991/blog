@@ -18,7 +18,7 @@ public class UserDetailsServiceImmpl implements UserDetailsService {
 	private Usuariorepositorio userRep;
 	
 	@Override
-	public UserDetails loadUserByUsername(String userName) {
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		Optional<Usuario> user = userRep.findByUsuario(userName);
 		user.orElseThrow(() -> new UsernameNotFoundException(userName + "not found."));
 		
